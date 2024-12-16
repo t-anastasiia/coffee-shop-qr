@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @StateObject private var viewModel = MainViewModel()
+    @StateObject private var authViewModel = AuthorizationViewModel()
     @ObservedObject private var session = SessionManager.shared
     
     var body: some View {
@@ -38,9 +39,9 @@ extension MainView {
     private func viewForRoute(_ route: Route) -> some View {
         switch route {
             case .login:
-                LoginView()
+                LoginView(viewModel: authViewModel)
             case .registration:
-                RegisterView()
+                RegisterView(viewModel: authViewModel)
             case .home:
                 HomeView()
             case .profile:
@@ -48,8 +49,7 @@ extension MainView {
             case .scan:
                 ScanView()
             case .onboarding:
-                EmptyView()
-//                OnboardingView()
+                OnboardingView()
         }
     }
     

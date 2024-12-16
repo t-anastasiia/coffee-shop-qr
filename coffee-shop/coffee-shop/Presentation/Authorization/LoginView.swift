@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @StateObject private var viewModel = AuthorizationViewModel()
+    @ObservedObject var viewModel: AuthorizationViewModel
     
     var body: some View {
         VStack(spacing: 10) {
@@ -32,7 +32,7 @@ struct LoginView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 
-                LoginTextField(title: "Почта", placeholder: "Введите вашу почту", binding: $viewModel.name)
+                LoginTextField(title: "Почта", placeholder: "Введите вашу почту", binding: $viewModel.email)
                 
                 PasswordTextField(binding: $viewModel.password)
                 
@@ -72,11 +72,14 @@ struct LoginView: View {
             }
             
         }
-        .padding(.horizontal, 16)
+        .padding(EdgeInsets(top: 24,
+                            leading: 16,
+                            bottom: 30,
+                            trailing: 16))
         .background(Color("LoginBg"))
     }
 }
 
 #Preview {
-    LoginView()
+    LoginView(viewModel: AuthorizationViewModel())
 }

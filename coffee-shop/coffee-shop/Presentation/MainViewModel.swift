@@ -21,7 +21,11 @@ class MainViewModel: ObservableObject {
     }
     
     func start() {
-        coordinator.start(with: .login)
+        if AppLaunchManager.shared.isFirstLaunch() {
+            coordinator.start(with: .onboarding(.step1))
+        } else {
+            coordinator.start(with: .login)
+        }
     }
     
     func navigate(to route: Route, allowDuplicates: Bool = false) {

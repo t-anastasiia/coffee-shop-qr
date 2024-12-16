@@ -11,11 +11,12 @@ import Foundation
 class AuthorizationViewModel: ObservableObject {
     private let useCase: AuthorizationUseCaseProtocol
     private let coordinator = AppCoordinator.shared
-    
+
     // MARK: - Published Properties
     @Published var currentUser: User? = nil
     @Published var errorMessage: String? = nil
     @Published var isLoading: Bool = false
+    @Published var currentRoute: Route? = .login
     
     // MARK: - Input Fields
     @Published var name: String = ""
@@ -26,6 +27,10 @@ class AuthorizationViewModel: ObservableObject {
     init(useCase: AuthorizationUseCaseProtocol = AuthorizationUseCase(authorizationRepository: AuthorizationRepository())) {
         self.useCase = useCase
         self.currentUser = useCase.getCurrentUser()
+        
+        coordinator.currentRoutePublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$currentRoute)
     }
     
     // MARK: - Registration
@@ -38,6 +43,7 @@ class AuthorizationViewModel: ObservableObject {
             if success {
                 self.currentUser = useCase.getCurrentUser()
                 self.errorMessage = nil
+                navigate(to: .home)
             } else {
                 self.errorMessage = "Registration failed. Please try again."
             }
@@ -55,6 +61,7 @@ class AuthorizationViewModel: ObservableObject {
             if success {
                 self.currentUser = useCase.getCurrentUser()
                 self.errorMessage = nil
+                navigate(to: .home)
             } else {
                 self.errorMessage = "Login failed. Please check your email and password."
             }
@@ -66,7 +73,7 @@ class AuthorizationViewModel: ObservableObject {
     func logout() {
         useCase.logout()
         currentUser = nil
-        coordinator.navigate(.login)
+        navigate(to: .login)
     }
     
     // MARK: - Navigation Methods
