@@ -7,12 +7,24 @@
 
 import Foundation
 
-public enum TabBarEnum: String, CaseIterable {
-    case home = "house"
-    case scan = "qrcode.viewfinder"
-    case profile = "person"
+enum TabBarEnum: Hashable {
+    case home
+    case scanOrQR(isWorker: Bool)
+    case profile
     
     var imageName: String {
-        return self.rawValue
+        switch self {
+        case .home: return "house"
+        case .scanOrQR(let isWorker): return isWorker ? "qrcode.viewfinder" : "qrcode"
+        case .profile: return "person"
+        }
+    }
+    
+    var route: Route {
+        switch self {
+        case .home: return .home
+        case .scanOrQR(let isWorker): return isWorker ? .scan : .qr
+        case .profile: return .profile
+        }
     }
 }

@@ -17,7 +17,7 @@ struct AuthorizationRepository: AuthorizationRepositoryProtocol {
     func register(userInfo: UserRegisterInfo) async -> User? {
         do {
             let user = try await dataSource.register(userInfo: userInfo)
-            SessionManager.shared.setUser(user)
+            await SessionManager.shared.setUser(user)
             print("User registered: \(user)")
             return user
         } catch {
@@ -29,7 +29,7 @@ struct AuthorizationRepository: AuthorizationRepositoryProtocol {
     func login(loginInfo: UserLoginInfo) async -> User? {
         do {
             let user = try await dataSource.login(loginInfo: loginInfo)
-            SessionManager.shared.setUser(user)
+            await SessionManager.shared.setUser(user)
             print("User logged in: \(user)")
             return user
         } catch {
@@ -38,10 +38,10 @@ struct AuthorizationRepository: AuthorizationRepositoryProtocol {
         }
     }
     
-    func logout() {
+    func logout() async {
         do {
             try dataSource.logout()
-            SessionManager.shared.clearUser()
+            await SessionManager.shared.clearUser()
             print("User logged out successfully")
         } catch {
             print("Logout failed: \(error.localizedDescription)")

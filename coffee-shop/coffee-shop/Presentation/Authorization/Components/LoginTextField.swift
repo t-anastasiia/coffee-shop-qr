@@ -22,6 +22,7 @@ struct LoginTextField: View {
                 Spacer()
             }
             TextField(placeholder, text: $binding)
+                .textInputAutocapitalization(.never)
                 .padding(EdgeInsets(top: 18,
                                     leading: 10,
                                     bottom: 18,

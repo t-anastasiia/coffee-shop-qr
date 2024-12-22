@@ -10,5 +10,5 @@ import Foundation
 protocol AuthorizationRepositoryProtocol {
     func register(userInfo: UserRegisterInfo) async -> User?
     func login(loginInfo: UserLoginInfo) async -> User?
-    func logout()
+    func logout() async
 }

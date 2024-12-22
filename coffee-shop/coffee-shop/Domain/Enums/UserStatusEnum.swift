@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum UserStatusEnum: String {
+public enum UserStatusEnum: String, Codable {
     case worker = "worker"
     case user = "user"
 }

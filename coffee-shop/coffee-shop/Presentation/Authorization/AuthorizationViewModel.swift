@@ -43,7 +43,9 @@ class AuthorizationViewModel: ObservableObject {
             if success {
                 self.currentUser = useCase.getCurrentUser()
                 self.errorMessage = nil
-                navigate(to: .home)
+                DispatchQueue.main.async {
+                    AppCoordinator.shared.navigate(.home, allowDuplicates: false)
+                }
             } else {
                 self.errorMessage = "Registration failed. Please try again."
             }
@@ -61,7 +63,9 @@ class AuthorizationViewModel: ObservableObject {
             if success {
                 self.currentUser = useCase.getCurrentUser()
                 self.errorMessage = nil
-                navigate(to: .home)
+                DispatchQueue.main.async {
+                    AppCoordinator.shared.navigate(.home, allowDuplicates: false)
+                }
             } else {
                 self.errorMessage = "Login failed. Please check your email and password."
             }
@@ -70,8 +74,8 @@ class AuthorizationViewModel: ObservableObject {
     }
     
     // MARK: - Logout
-    func logout() {
-        useCase.logout()
+    func logout() async {
+        await useCase.logout()
         currentUser = nil
         navigate(to: .login)
     }

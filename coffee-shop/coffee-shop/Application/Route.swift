@@ -13,6 +13,7 @@ enum Route: Identifiable, Hashable {
     case home
     case profile
     case scan
+    case qr
     case onboarding(OnboardingStep)
     
     var id: String {
@@ -27,6 +28,8 @@ enum Route: Identifiable, Hashable {
                 return "profile"
             case .scan:
                 return "scan"
+            case .qr:
+                return "qr"
             case .onboarding(let step):
                 return "onboarding-\(step.rawValue)"
         }

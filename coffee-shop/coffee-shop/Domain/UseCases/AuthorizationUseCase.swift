@@ -10,7 +10,7 @@ import Foundation
 protocol AuthorizationUseCaseProtocol {
     func register(userInfo: UserRegisterInfo) async -> Bool
     func login(loginInfo: UserLoginInfo) async -> Bool
-    func logout()
+    func logout() async
     func getCurrentUser() -> User?
 }
 
@@ -35,10 +35,11 @@ class AuthorizationUseCase: AuthorizationUseCaseProtocol {
         return true
     }
     
-    func logout() {
-        authorizationRepository.logout()
+    func logout() async {
+        await authorizationRepository.logout()
     }
     
+    @MainActor
     func getCurrentUser() -> User? {
         return SessionManager.shared.currentUser
     }

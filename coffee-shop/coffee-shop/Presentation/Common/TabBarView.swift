@@ -25,15 +25,15 @@ struct TabBarView: View {
 
 extension TabBarView {
     var tabBarIcons: some View {
-        ForEach(TabBarEnum.allCases, id: \.self) { tabType in
+        ForEach(viewModel.availableTabs, id: \.self) { tabType in
             Button {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.5)) {
                     viewModel.selectedIndex = tabType
+                    viewModel.navigate(to: tabType.route)
                 }
             } label: {
                 Spacer()
                 Image(systemName: tabType.imageName)
-                    .font(.system(size: tabType == .scan ? 31 : 20))
                     .foregroundColor(tabType == viewModel.selectedIndex ? .accentColor : .gray)
                     .scaleEffect(viewModel.selectedIndex == tabType ? 1.2 : 1.0)
                 Spacer()

@@ -48,6 +48,8 @@ extension MainView {
                 ProfileView()
             case .scan:
                 ScanView()
+            case .qr:
+                QrView()
             case .onboarding:
                 OnboardingView()
         }

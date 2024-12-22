@@ -7,14 +7,22 @@
 
 import Foundation
 
-public struct User {
+public struct User: Codable {
     public let id: String
     public let name: String
     public let email: String
     public let coffeeCount: Int
     public let status: UserStatusEnum
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case email
+        case coffeeCount
+        case status
+    }
     
-    init(id: String, name: String, email: String, coffeeCount: Int, status: UserStatusEnum) {
+    public init(id: String, name: String, email: String, coffeeCount: Int, status: UserStatusEnum) {
         self.id = id
         self.name = name
         self.email = email

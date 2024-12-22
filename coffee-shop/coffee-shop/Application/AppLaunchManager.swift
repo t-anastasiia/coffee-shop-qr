@@ -16,9 +16,9 @@ class AppLaunchManager {
     
     // Проверка первого запуска
     func isFirstLaunch() -> Bool {
-        #if DEBUG
-        return true // Всегда возвращать первый запуск в режиме Debug
-        #else
+//        #if DEBUG
+//        return true // Всегда возвращать первый запуск в режиме Debug
+//        #else
         let isFirstLaunch = !UserDefaults.standard.bool(forKey: firstLaunchKey)
         
         if isFirstLaunch {
@@ -27,7 +27,7 @@ class AppLaunchManager {
         }
         
         return isFirstLaunch
-        #endif
+//        #endif
     }
     
     // Сброс флага (для тестирования)

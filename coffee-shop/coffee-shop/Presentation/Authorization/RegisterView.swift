@@ -41,7 +41,7 @@ struct RegisterView: View {
                 
                     
                 Button {
-                    viewModel.navigate(to: .registration)
+                    viewModel.register()
                 } label: {
                     Text("ЗАРЕГИСТРИРОВАТЬСЯ")
                         .foregroundStyle(.white)
