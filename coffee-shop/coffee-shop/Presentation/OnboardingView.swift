@@ -11,27 +11,56 @@ struct OnboardingView: View {
     @StateObject private var viewModel = OnboardingViewModel()
     
     var body: some View {
-        VStack(spacing: 0) {
-            Image(imageName)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 255)
             
-            Spacer()
+        VStack(spacing: 20) {
+            VStack(spacing: 20) {
+                GeometryReader { geometry in
+                    
+                    let designSize: CGFloat = 945.2
+                    
+                    let imageWidth = geometry.size.width + 16
+                    let scaleFactor = imageWidth / designSize
+                    
+                    let baseOffset = (designSize / 2) * scaleFactor
+                    let stepOffset = designSize * scaleFactor
+                    let computedOffset = baseOffset + CGFloat(viewModel.currentStep.rawValue) * stepOffset
+                    
+                    ZStack {
+                        Image("Onboarding/onboarding_reel")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    }
+                    .offset(x: -computedOffset, y: 0)
+                    .animation(.easeInOut, value: viewModel.currentStep)
+                    .frame(height: designSize * scaleFactor)
+                    .padding(.horizontal, -16)
+                    .padding(.top, 8)
+                }
+                
+                Text(viewModel.currentStep.description)
+                    .font(.system(size: 24, weight: .bold))
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(Color("LoginBg"))
+                    .frame(maxWidth: .infinity)
+                    .animation(.easeInOut, value: viewModel.currentStep)
+                    .padding(.bottom, 50)
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(.accent)
+            )
+            
             
             HStack {
-                Image(loadingImageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 40)
                 
                 Spacer()
                 
                 Button {
                     viewModel.next()
                 } label: {
-                    Text("Далее")
-                        .foregroundStyle(.white)
+                    Text("Next")
+                        .foregroundStyle(Color("LoginBg"))
+                        .bold()
                         .padding(EdgeInsets(top: 20,
                                             leading: 54,
                                             bottom: 20,
@@ -72,39 +101,14 @@ extension OnboardingView {
             Button {
                 viewModel.skip()
             } label: {
-                Text("Пропустить")
+                Text("Skip")
+                    .italic()
             }
         }
         .padding(EdgeInsets(top: 20,
                             leading: 16, 
                             bottom: 20, 
                             trailing: 16))
-    }
-    
-    var loadingImageName: String {
-        var name = "Onboarding/"
-        switch viewModel.currentStep {
-            case .step1:
-                name += "beens1"
-            case .step2:
-                name += "beens2"
-            case .step3:
-                name += "beens3"
-        }
-        return name
-    }
-    
-    private var imageName: String {
-        var name = "Onboarding/"
-        switch viewModel.currentStep {
-            case .step1:
-                name += "img1"
-            case .step2:
-                name += "img2"
-            case .step3:
-                name += "img3"
-        }
-        return name
     }
 }
 

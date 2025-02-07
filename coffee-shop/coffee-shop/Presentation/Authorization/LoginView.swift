@@ -13,12 +13,14 @@ struct LoginView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            Image("CoffeeShotLogo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 56)
-            
-            VStack(spacing: 20) {
+            VStack(spacing: -25) {
+                Image("beans_falling")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(.horizontal, -16)
+                    .scaleEffect(x: -1, y: 1)
+                    .ignoresSafeArea(edges: .top)
+                
                 VStack(spacing: 10) {
                     HStack {
                         Text("Вход")
@@ -31,6 +33,12 @@ struct LoginView: View {
                         .font(.footnote)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .background(.blue)
+            }
+            
+            Spacer()
+            
+            VStack(spacing: 20) {
                 
                 LoginTextField(title: "Почта", placeholder: "Введите вашу почту", binding: $viewModel.email)
                 
@@ -50,29 +58,25 @@ struct LoginView: View {
                         )
                 }
                 
-                Spacer()
-                
-                VStack(spacing: 5) {
-                    
+                HStack(spacing: 5) {
                     Text("Еще нет аккаунта?")
                         .font(.footnote)
                     
                     Button {
                         viewModel.navigate(to: .registration)
                     } label: {
-                        Text("СОЗДАТЬ АККАУНТ")
-                            .foregroundStyle(.white)
-                            .padding(.vertical, 20)
-                            .frame(maxWidth: .infinity)
-                            .background(
-                                RoundedRectangle(cornerRadius: 22)
-                            )
+                        Text("Зарегистируйтесь")
+                            .foregroundStyle(Color("Text/Mint"))
+                            .italic()
+
                     }
                 }
+                .padding(.top, -15)
             }
+
             
         }
-        .padding(EdgeInsets(top: 24,
+        .padding(EdgeInsets(top: 0,
                             leading: 16,
                             bottom: 30,
                             trailing: 16))
