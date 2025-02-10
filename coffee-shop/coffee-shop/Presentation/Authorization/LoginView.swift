@@ -13,12 +13,15 @@ struct LoginView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            VStack(spacing: -25) {
-                Image("beans_falling")
-                    .resizable()
-                    .scaledToFit()
-                    .padding(.horizontal, -16)
-                    .scaleEffect(x: -1, y: 1)
+            VStack(spacing: 0) {
+//                Image("beans_falling")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .padding(.horizontal, -16)
+//                    .scaleEffect(x: -1, y: 1)
+//                    .ignoresSafeArea(edges: .top)
+                SteamEffect()
+                    .frame(height: 200)
                     .ignoresSafeArea(edges: .top)
                 
                 VStack(spacing: 10) {
@@ -33,7 +36,6 @@ struct LoginView: View {
                         .font(.footnote)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .background(.blue)
             }
             
             Spacer()
